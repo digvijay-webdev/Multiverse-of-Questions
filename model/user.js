@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { isEmail, isAlpha, isAlphanumeric } = require("validator");
+const { isEmail, isAlpha } = require("validator");
 const Schema = mongoose.Schema;
 
 
@@ -44,7 +44,7 @@ const userSchema = new Schema({
         maxlength: 14,
         trim: true,
         lowercase: true,
-        validate: [isAlphanumeric, "invalid security answer"]
+        validate: [isAlpha, "Please, enter a alphabetic value only"]
     },
     password: {
         type: String,

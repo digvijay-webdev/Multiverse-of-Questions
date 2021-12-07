@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { isAlpha } = require("validator");
 const Schema = mongoose.Schema;
 
 /*
@@ -14,9 +15,29 @@ const questionsSchema = new Schema({
         required: true,
         trim: true
     },
+    firstName: {
+        type: String,
+        required: [true, "First Name is Required"],
+        maxlength: 14,
+        minlength: 2,
+        trim: true,
+        lowercase: true,
+        validate: [isAlpha, "Please use alphabetes only"]
+    },
+    lastName: {
+        type: String,
+        required: [true, "Last Name is Required"],
+        maxlength: 14,
+        minlength: 2,
+        trim: true,
+        lowercase: true,
+        validate: [isAlpha, "Please use alphabetes only"]
+    },
     question: {
         type: String,
         required: true,
+        maxlength: 100,
+        minlength: 15,
         trime: true,
         lowercase: true,
         unique: true

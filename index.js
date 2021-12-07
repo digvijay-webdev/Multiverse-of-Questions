@@ -14,6 +14,8 @@ const os = require("os");
 const signupConfig = require("./config/signup");
 const loginConfig = require("./config/login");
 const postQuestions = require("./controllers/private/postQuestions");
+const getAllQuestions = require("./controllers/public/getAllQuestions");
+const getPersonalQuestions = require("./controllers/private/getQuestions");
 
 // utilities
 const clusterise = require("./utilities/clusterise");
@@ -33,6 +35,8 @@ app.use(loginConfig);
 
 // controllers
 app.use("/private", postQuestions);
+app.use("/private", getPersonalQuestions);
+app.use("/public", getAllQuestions);
 
 // clusterising + port config + starting + connecting to DB
 const numOfCPUs = os.cpus().length;

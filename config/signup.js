@@ -1,14 +1,18 @@
 // signing-up/registration only
 const config = require("express").Router();
+const badWordsFilter = require("bad-words");
 const bcrypt = require("bcryptjs");
 const User = require("../model/user");
 
 
+// initialising Filter for removing bad-words from names
+const Filter = new badWordsFilter();
+
 // Signup Route ~ POST
 config.post("/auth/signup", (req, res) => {
     User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstName: Filter.clean(req.body.firstName),
+        lastName: Filter.clean(req.body.lastName),
         email: req.body.email,
         securityQuestion: req.body.securityQuestion,
         password: bcrypt.hashSync(req.body.password, 10)

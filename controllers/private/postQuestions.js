@@ -1,9 +1,13 @@
 // Post Questions Route ~ after log-in
 const router = require("express").Router();
+const badWordsFilter = require("bad-words");
 const verifyAuthToken = require("../../utilities/verifyToken");
 const User = require("../../model/user");
 const Questions = require("../../model/questions");
 
+
+// initialising Filter for removing bad-words from names
+const Filter = new badWordsFilter()
 
 /*
 uid
@@ -26,7 +30,7 @@ router.post("/postQuestion", verifyAuthToken, (req, res) => {
 
                 // if question is not in our db... create document
                 if (!question) {
-                    Questions.create({ _uid: req.body.userToken.mongo_id, question: req.body.question, isAnonymousPost: req.body.isAnonymousPost })
+                    Questions.create({ _uid: req.body.userToken.mongo_id, question: Filter.clean(req.body.question), firstName: req.body.userToken.firstName, lastName: req.body.userToken.lastName, isAnonymousPost: req.body.isAnonymousPost })
                         .then(result => {
                             console.log(result);
                             res.send({
@@ -36,7 +40,7 @@ router.post("/postQuestion", verifyAuthToken, (req, res) => {
                         .catch(err => {
                             res.status(500).send({
                                 message: "Something Went Wrong Please Try Again Later",
-                                error: `QuestionCreateError01: ${err}`
+                                error: `QuestionCreateError01:\n ${err}`
                             });
                         });
                 }
