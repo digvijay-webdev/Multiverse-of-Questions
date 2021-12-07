@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { isEmail, isAlpha, isAlphanumeric } = require("validator");
 const Schema = mongoose.Schema;
 
 
@@ -14,7 +15,8 @@ const userSchema = new Schema({
         maxlength: 14,
         minlength: 2,
         trim: true,
-        lowercase: true
+        lowercase: true,
+        validate: [isAlpha, "Please, enter a alphabetic value only"]
     },
     lastName: {
         type: String,
@@ -22,23 +24,27 @@ const userSchema = new Schema({
         maxlength: 14,
         minlength: 2,
         trim: true,
-        lowercase: true
+        lowercase: true,
+        validate: [isAlpha, "Please, enter a alphabetic value only"]
     },
     email: {
         type: String,
         required: [true, "Email is Required"],
-        maxlength: 28,
+        maxlength: 50,
         minlength: 9,
         trim: true,
-        unique: true
+        lowercase: true,
+        unique: true,
+        validate: [isEmail, "Please, enter a valid email"]
     },
     securityQuestion: {
         type: String,
-        required: [true, "please, provide a security answer"],
+        required: [true, "security answer is required"],
         minlength: 2,
         maxlength: 14,
         trim: true,
-        lowercase: true
+        lowercase: true,
+        validate: [isAlphanumeric, "invalid security answer"]
     },
     password: {
         type: String,
