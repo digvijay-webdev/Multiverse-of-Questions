@@ -39,6 +39,7 @@ router.post("/postQuestion", verifyAuthToken, (req, res) => {
                         })
                         .catch(err => {
                             res.status(500).send({
+                                // work on this bug.... E11000 - duplicate error
                                 message: "Something Went Wrong Please Try Again Later",
                                 error: `QuestionCreateError01:\n ${err}`
                             });

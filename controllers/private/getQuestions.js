@@ -1,12 +1,12 @@
 // GET ~ send user's personal questions for profile/dashboard page
 const router = require("express").Router();
-const question = require("../../model/questions");
+const Question = require("../../model/questions");
 const verifyAuthToken = require("../../utilities/verifyToken");
 
 router.get("/getPersonalQuestions", verifyAuthToken, (req, res) => {
     if (req.body.userToken) {
         // if user is legit sending data
-        question.find({ _uid: req.body.userToken.mongo_id })
+        Question.find({ _uid: req.body.userToken.mongo_id })
             .then(questions => {
                 res.send(questions);
             })
