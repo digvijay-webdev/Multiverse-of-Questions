@@ -15,7 +15,7 @@ config.post("/auth/signup", (req, res) => {
         lastName: Filter.clean(req.body.lastName),
         email: req.body.email,
         securityQuestion: req.body.securityQuestion,
-        password: bcrypt.hashSync(req.body.password, 10)
+        password: bcrypt.hashSync(req.body.password.trim(), 10)
     })
         .then(data => {
             res.send({ message: "Please check your inbox to get started" });
