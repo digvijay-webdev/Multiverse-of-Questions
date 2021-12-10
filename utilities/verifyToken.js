@@ -24,7 +24,7 @@ const verifyAuthToken = (req, res, next) => {
 }
 
 /*
-If 'userToken' is available then middleware will let process go on otherwise it will respond with statusCode: 401
+If 'userToken' is available then middleware will let the process go on otherwise it will respond with statusCode: 401
 */
 
 module.exports = verifyAuthToken;

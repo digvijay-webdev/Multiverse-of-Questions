@@ -7,7 +7,7 @@ const Questions = require("../../model/questions");
 
 
 // initialising Filter for removing bad-words from names
-const Filter = new badWordsFilter()
+const Filter = new badWordsFilter();
 
 /*
 uid
@@ -30,17 +30,18 @@ router.post("/postQuestion", verifyAuthToken, (req, res) => {
 
                 // if question is not in our db... create document
                 if (!question) {
-                    Questions.create({ _uid: req.body.userToken.mongo_id, question: Filter.clean(req.body.question), firstName: req.body.userToken.firstName, lastName: req.body.userToken.lastName, isAnonymousPost: req.body.isAnonymousPost })
+                    Questions.create({ _uid: req.body.userToken.mongo_id, question: Filter.clean(req.body.question.trim()), explanation: Filter.clean(req.body.explanation.trim()), firstName: req.body.userToken.firstName, lastName: req.body.userToken.lastName, isAnonymousPost: req.body.isAnonymousPost })
                         .then(result => {
-                            console.log(result);
+                            console.log("New Question Posted..");
                             res.send({
                                 message: "Question Posted Successfully"
                             });
                         })
                         .catch(err => {
+                            console.log("ERROR: 01 POST-Question\n" + err);
                             res.status(500).send({
-                                // work on this bug.... E11000 - duplicate error
-                                message: "Something Went Wrong Please Try Again Later",
+                                // E11000 - duplicate error
+                                message: "That Question or Explation is already posted by someone.",
                                 error: `QuestionCreateError01:\n ${err}`
                             });
                         });
@@ -49,8 +50,8 @@ router.post("/postQuestion", verifyAuthToken, (req, res) => {
             .catch(err => {
                 res.send({
                     message: "Somthing Went Wrong Please Try Again Later",
-                    error: `QuestionFindError01: ${err}`
-                })
+                    error: `QuestionFindError02:\n ${err}`
+                });
             });
     } else {
         res.status(401).send({

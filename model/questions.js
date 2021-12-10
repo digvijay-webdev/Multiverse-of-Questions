@@ -42,6 +42,14 @@ const questionsSchema = new Schema({
         lowercase: true,
         unique: true
     },
+    explanation: {
+        type: String,
+        required: true,
+        maxlength: 2500,
+        minlength: 30,
+        trim: true,
+        unique: true
+    },
     isAnonymousPost: {
         type: Boolean,
         required: true,

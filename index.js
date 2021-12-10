@@ -45,7 +45,8 @@ const numOfCPUs = os.cpus().length;
 const port = process.env.PORT || process.env.LOCAL_SERVER_PORT;
 
 mongoose.connect(process.env.ATLAS_CONNECTION_URI, {
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useNewUrlParser: true
 })
     .then(() => clusterise(port, numOfCPUs, app))
     .catch(err => console.log(`FAILED TO CONNECT WITH ATLAS:\n${err}`));
