@@ -10,6 +10,7 @@ const Questions = require("../../model/questions");
 
 router.delete("/deleteQuestion", verifyAuthToken, (req, res) => {
     // if JWT is verified
+    console.log(req.body);
     if (req.body.userToken) {
         // checking question_id property
         if (req.body.question_id) {
