@@ -13,9 +13,25 @@ const verifyAuthToken = (req, res, next) => {
                     message: "Session Expired Please Log-in Again"
                 });
             } else {
-                console.log(decryptedJWT);
-                req.body.userToken = decryptedJWT;
-                next();
+                User.findById({ _id: decryptedJWT.mongo_id })
+                    .then(user => {
+                        if (user.isVerified) {
+                            console.log(decryptedJWT);
+                            req.body.userToken = decryptedJWT;
+                            next();
+                        } else {
+                            console.log(decryptedJWT);
+                            res.send({
+                                message: "Please verify your email to get started"
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log("ErrorVerifyToken: 02\n" + err);
+                        res.send({
+                            message: "Session expired or account not verified"
+                        });
+                    });
             }
         });
     } else {

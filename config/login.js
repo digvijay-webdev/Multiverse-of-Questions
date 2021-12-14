@@ -12,36 +12,47 @@ config.post("/auth/login", (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
-                // compare password + issue JWT Token
-                if (bcrypt.compareSync(req.body.password, user.password)) {
-                    jwt.sign({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        mongo_id: user._id
-                    }, process.env.JWT_SECRET_KEY, {
-                        expiresIn: "1h"
-                    }, (err, encode) => {
-                        if (err) {
-                            // if error occurred
-                            console.log(`CustomErrorCode: LOGIN01... \n${err}`);
-                            res.send("Unable to process your request at the moment please try again later");
-                        } else {
-                            // if jwt token created successfuly, sent to client
-                            res.send({
-                                message: {
-                                    first: user.firstName,
-                                    last: user.lastName
-                                },
-                                token: encode
-                            });
-                        }
-                    });
+                if (user.isVerified) {
+                    // compare password + issue JWT Token
+                    if (bcrypt.compareSync(req.body.password, user.password)) {
+                        jwt.sign({
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            mongo_id: user._id
+                        }, process.env.JWT_SECRET_KEY, {
+                            expiresIn: "1h"
+                        }, (err, encode) => {
+                            if (err) {
+                                // if error occurred
+                                console.log(`CustomErrorCode: LOGIN01... \n${err}`);
+                                res.send("Unable to process your request at the moment please try again later");
+                            } else {
+                                // if jwt token created successfuly, sent to client
+                                res.send({
+                                    message: {
+                                        first: user.firstName,
+                                        last: user.lastName
+                                    },
+                                    token: encode
+                                });
+                            }
+                        });
+                    } else {
+                        // if password does not match
+                        res.send({
+                            message: "Please, Enter the correct password"
+                        });
+                    }
                 } else {
-                    // if password does not match
-                    res.send("Please, Enter the correct password");
+                    // if not verified 
+                    res.send({
+                        message: "Please, verify your email to continue"
+                    });
                 }
             } else {
-                res.send(`User with Email: ${req.body.email} does not exists`);
+                res.send({
+                    message: `User with Email: ${req.body.email} does not exists`
+                });
             }
         })
         .catch(err => {
