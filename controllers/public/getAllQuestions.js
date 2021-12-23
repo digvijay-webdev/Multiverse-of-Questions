@@ -21,7 +21,6 @@ router.get("/getAllQuestions", (req, res) => {
                         __v: question.__v
                     }
                 } else {
-                    console.log(question);
                     return question;
                 }
             });

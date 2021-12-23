@@ -35,15 +35,19 @@ const verifyAccountMail = async (email, subject, name, token) => {
 <body style="font-family: 'Ubuntu', sans-serif;">
     <main style="height: 100vh;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100%;
+    position: reletive;
     background-color: #eeeeee73;">
         <div style="background-color: #FFF;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         padding: 14px 22px;
         box-shadow: 0 0 8px #3b3b3b3d;
         border-radius: 6px;
-        width: 80%;">
+        width: 80%;
+        height: max-content">
             <h1 style="color: #0a3d62;font-size: 1.5rem;">Welcome to Multiverse of Question '?'</h1>
             <p style="color: #636e72;margin: 18px 0; text-transform: capitalize;">
                 Dear ${name},

@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 
+
 // core node modules
 const os = require("os");
 
@@ -26,7 +27,6 @@ const clusterise = require("./utilities/clusterise");
 
 // express app initialised
 const app = express();
-
 
 
 // express middlewares

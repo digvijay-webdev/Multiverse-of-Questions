@@ -19,7 +19,7 @@ config.get("/verifyEmail/:token", (req, res) => {
                     .then(user => {
                         if (user) {
                             // on successful update
-                            res.send( "Email Verified Successfully, now you can log-in");
+                            res.send("Email Verified Successfully, now you can log-in");
                         } else {
                             res.send({
                                 message: "Unknown error occurred, please try later",

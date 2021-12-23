@@ -12,6 +12,7 @@ const Filter = new badWordsFilter();
 
 // Signup Route ~ POST
 config.post("/auth/signup", (req, res) => {
+    console.log(req.body);
     User.create({
         firstName: Filter.clean(req.body.firstName),
         lastName: Filter.clean(req.body.lastName),
@@ -33,6 +34,7 @@ config.post("/auth/signup", (req, res) => {
                     // sending verification email
                     let url = "http://localhost:3000/verifyEmail/" + encode;
                     verifyAccountMail(data.email, "Verify Your Account To Get Started", data.firstName, url);
+                    console.log(url);
                     res.send({ message: "Please check your inbox to get started" });
                 }
             });
