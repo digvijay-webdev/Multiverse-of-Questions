@@ -33,9 +33,21 @@ config.post("/auth/signup", (req, res) => {
                 } else {
                     // sending verification email
                     let url = "http://localhost:3000/verifyEmail/" + encode;
-                    verifyAccountMail(data.email, "Verify Your Account To Get Started", data.firstName, url);
-                    console.log(url);
-                    res.send({ message: "Please check your inbox to get started" });
+
+                    try {
+                        // trying to send email
+                        verifyAccountMail(data.email, "Verify Your Account To Get Started", data.firstName, url);
+                        console.log(url);
+                        res.send({ message: "Please check your inbox to get started" });
+                    } catch(err) {
+                        // if failed to send email
+                        if (err) {
+                            console.log("Failed to send email (Config/Signup): Err01MAIL\n" + err);
+                            res.send({
+                                message: "Unable to send verification email please try later"
+                            });
+                        }
+                    }
                 }
             });
         })
