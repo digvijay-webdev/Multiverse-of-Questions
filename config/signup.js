@@ -32,7 +32,7 @@ config.post("/auth/signup", (req, res) => {
                     });
                 } else {
                     // sending verification email
-                    let url = "http://localhost:3000/verifyEmail/" + encode;
+                    let url = `${process.env.URL_FOR_EMAIL_VERIFICATION}/verifyEmail/` + encode;
                     verifyAccountMail(data.email, "Verify Your Account To Get Started", data.firstName, url)
                         .then(success => {
                             console.log(url);
