@@ -15,6 +15,7 @@ router.get("/getAllQuestions", (req, res) => {
                         firstName: "Anonymous",
                         lastName: "Post",
                         question: question.question,
+                        explanation: question.explanation,
                         isAnonymousPost: question.isAnonymousPost,
                         createdAt: question.createdAt,
                         updatedAt: question.updatedAt,
