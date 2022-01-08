@@ -24,7 +24,7 @@ config.post("/auth/signup", (req, res) => {
             // sign-verification token
             jwt.sign({
                 uid: data._id
-            }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" }, (err, encode) => {
+            }, process.env.JWT_SECRET_KEY, { expiresIn: "10h" }, (err, encode) => {
                 if (err) {
                     res.send({
                         message: "Unable to process your request please try later",
