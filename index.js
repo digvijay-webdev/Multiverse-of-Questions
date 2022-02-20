@@ -30,6 +30,7 @@ const app = express();
 
 
 // express middlewares
+app.set('x-powered-by', false);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger("dev"));
